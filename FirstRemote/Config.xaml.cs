@@ -22,6 +22,7 @@ namespace Edith.Modules.FirstRemote
         public Config()
         {
             InitializeComponent();
+            //teste
         }
     }
 }
