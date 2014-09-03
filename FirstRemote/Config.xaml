@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Edith.Modules.FirstRemote.Config"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:Edith.AbstractModules.TVBox" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="459">
+    <Grid Background="{DynamicResource  ResourceKey=IcsDarkBackground}" Width="460">
+        <Grid Margin="24,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25*"></RowDefinition>
+                <RowDefinition Height="75*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="25*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"  Margin="5"  Source="{DynamicResource ResourceKey=image_TV}"/>
+            <Border  Grid.Column="1" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkSelected}" Background="{DynamicResource  ResourceKey=IcsDarkOffFocus}">
+                <MediaElement   LoadedBehavior="Manual" UnloadedBehavior="Manual" Name="Player" />
+            </Border>
+            <Grid Grid.Row="1" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="88*"></ColumnDefinition>
+                    <ColumnDefinition Width="138*"></ColumnDefinition>
+                    <ColumnDefinition Width="22*"></ColumnDefinition>
+                    <ColumnDefinition Width="5px"></ColumnDefinition>
+                    <ColumnDefinition Width="85*"></ColumnDefinition>
+                    <ColumnDefinition Width="140*"></ColumnDefinition>
+                    <ColumnDefinition Width="22*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                    <RowDefinition Height="20*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource  ResourceKey=IcsDarkSelected}" Grid.Column="3" Grid.RowSpan="20" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="2" Text="{Binding Source={x:Static res:Settings.Default}, Path=R1,      Mode=TwoWay}" Width="127" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="3" Text="{Binding Source={x:Static res:Settings.Default}, Path=R2,      Mode=TwoWay}" Width="127" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="4" Text="{Binding Source={x:Static res:Settings.Default}, Path=R3,      Mode=TwoWay}" Width="127" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="5" Text="{Binding Source={x:Static res:Settings.Default}, Path=R4,      Mode=TwoWay}" Width="127" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="122,2,0,0" Grid.Column="1" Grid.Row="5" Text="{Binding Source={x:Static res:Settings.Default}, Path=R5,      Mode=TwoWay}" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="7" Text="{Binding Source={x:Static res:Settings.Default}, Path=R6,      Mode=TwoWay}" Width="127" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="8" Text="{Binding Source={x:Static res:Settings.Default}, Path=R7,      Mode=TwoWay}" Grid.ColumnSpan="2" Width="117" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="9" Text="{Binding Source={x:Static res:Settings.Default}, Path=R8,      Mode=TwoWay}" Grid.ColumnSpan="2" Width="117" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="10" Text="{Binding Source={x:Static res:Settings.Default}, Path=R9,      Mode=TwoWay}" />
+                <TextBox  Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,0,1" Grid.Column="1" Grid.Row="1" Text="{Binding Source={x:Static res:Settings.Default}, Path=R10Label, Mode=TwoWay}" Width="127" />
+                <TextBox TextChanged="TextBox_TextChanged" Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,5,1" Grid.Column="4" Grid.Row="10" Text="{Binding Source={x:Static res:Settings.Default}, Path=R19Label, Mode=TwoWay}" />
+                <TextBox TextChanged="TextBox_TextChanged" Style="{DynamicResource  ResourceKey=ConfigStyleTextbox}" Margin="5,1,5,1" Grid.Column="5" Grid.Row="10" Text="{Binding Source={x:Static res:Settings.Default}, Path=R19,      Mode=TwoWay}" />
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="1" Name="ButtonR0"  Click="ButtonR0_Click"  FontFamily="Webdings" Content="4"/>
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="2" Name="ButtonR1"  Click="ButtonR1_Click"  FontFamily="Webdings" Content="4" />
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="3" Name="ButtonR2"  Click="ButtonR2_Click"  FontFamily="Webdings" Content="4"/>
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="4" Name="ButtonR3"  Click="ButtonR3_Click"  FontFamily="Webdings" Content="4" />
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="5" Name="ButtonR4"  Click="ButtonR4_Click"  FontFamily="Webdings" Content="4"/>
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="6" Name="ButtonR5"  Click="ButtonR5_Click"  FontFamily="Webdings" Content="4" />
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="7" Name="ButtonR6"  Click="ButtonR6_Click"  FontFamily="Webdings" Content="4"/>
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="8" Name="ButtonR7"  Click="ButtonR7_Click"  FontFamily="Webdings" Content="4" />
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="9" Name="ButtonR8"  Click="ButtonR8_Click"  FontFamily="Webdings" Content="4"/>
+                <Button Grid.Column="2" Margin="0,1,1,1" Grid.Row="10" Name="ButtonR9"  Click="ButtonR9_Click"  FontFamily="Webdings" Content="4" />
+                <Button Grid.Column="6" Margin="1,2,1,0" Grid.Row="10" Name="ButtonR19" Click="ButtonR19_Click" FontFamily="Webdings" Content="4" />
+                <Label Content="Botões" Foreground="WhiteSmoke" Height="22" HorizontalAlignment="Left" Margin="11,-3,0,0" Name="label1" VerticalAlignment="Top" Width="77" />
+                <Label Content="Código IR" Foreground="WhiteSmoke" Grid.Column="1" Height="26" HorizontalAlignment="Left" Margin="37,-3,0,0" Name="label2" VerticalAlignment="Top" Width="121" Grid.ColumnSpan="2" />
+                <Label Content="Volume +" Foreground="WhiteSmoke" Height="22" HorizontalAlignment="Left" Margin="11,22,0,0" Name="label3" VerticalAlignment="Top" Width="80" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+                <Label Content="Volume -" Foreground="WhiteSmoke" Grid.Row="2" Height="22" HorizontalAlignment="Left" Margin="11,0,0,0" Name="label4" VerticalAlignment="Top" Width="82" Grid.ColumnSpan="2" />
+                <Label Content="Aumentar Ch" Foreground="WhiteSmoke" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="1,19,0,0" Name="label5" VerticalAlignment="Top" Width="80" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                <Label Content="Diminuir Ch" Foreground="WhiteSmoke" Grid.Row="3" Height="22" HorizontalAlignment="Left" Name="label6" VerticalAlignment="Top" Width="85" Margin="5,17,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+                <Label Content="Ligar TV" Foreground="WhiteSmoke" Grid.Row="4" Height="28" HorizontalAlignment="Left" Margin="11,19,0,0" Name="label7" VerticalAlignment="Top" Width="84" Grid.RowSpan="3" Grid.ColumnSpan="2" />
+                <Label Content="Label" Grid.Row="6" Grid.RowSpan="2" Height="18" HorizontalAlignment="Left" Margin="6,2,0,0" Name="label8" VerticalAlignment="Top" Width="83" />
+                <Label Content="Desligar TV" Foreground="WhiteSmoke" Grid.ColumnSpan="2" Grid.RowSpan="3" Height="28" HorizontalAlignment="Left" Margin="4,15,0,0" Name="label9" VerticalAlignment="Top" Width="84" Grid.Row="5" />
+                <Label Content="Mute" Foreground="WhiteSmoke" Grid.Row="7" Height="28" HorizontalAlignment="Left" Margin="11,0,0,0" Name="label10" VerticalAlignment="Top" Width="82" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                <TextBox Margin="5,0,0,0" Style="{DynamicResource ConfigStyleTextbox}" Text="{Binding Source={x:Static res:Settings.Default}, Path=R7, Mode=TwoWay}" Height="19" Width="127" Grid.Column="1" Grid.Row="6" />
+            </Grid>
+        </Grid>
+     </Grid>
+   </UserControl>

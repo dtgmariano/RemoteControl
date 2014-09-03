@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Edith.Modules.FirstRemote.FirstRemote"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid  Background="{DynamicResource  ResourceKey=IcsDarkBackground}">
+        <Viewbox>
+            <StackPanel Orientation="Horizontal" Height="400">
+                <Border Margin="15" Name="B1" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}">
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource  ResourceKey='button_exit'}"/>
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B2" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}" />
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B3" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B4" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B5" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B6" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
+                <Border Margin="15" Name="B7" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</UserControl>
+
