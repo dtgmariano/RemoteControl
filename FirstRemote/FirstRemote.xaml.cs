@@ -50,7 +50,7 @@ namespace Edith.Modules.FirstRemote
         }
 
         private static CodeFormat transmitFormat = CodeFormat.Pronto;
-        private static LearnCompletedEventArgs learnCompletedEventArgs = null; ///é anulado o Evento LearnCompleted
+      //private static LearnCompletedEventArgs learnCompletedEventArgs = null; ///é anulado o Evento LearnCompleted
         private static void mc_TransmitCompleted(object sender, TransmitCompletedEventArgs e)
     {
             ManualResetEvent waitEvent = e.UserState as ManualResetEvent;
@@ -58,114 +58,7 @@ namespace Edith.Modules.FirstRemote
         
     }
 
-
-     void LearnCompletedEvent(object sender, LearnCompletedEventArgs e)
-        {
-            System.Diagnostics.Debugger.Break();
-        }
-
-        private static void TestLearn(Controller mc, CodeFormat learnFormat, LearnCodeModifier learnCodeModifier)
-        {
-            learnCompletedEventArgs = null;
-      //      Console.WriteLine("<Press x to abort Learn>");
-            mc.Learning += new UsbUirt.Controller.LearningEventHandler(mc_Learning);
-            mc.LearnCompleted += new UsbUirt.Controller.LearnCompletedEventHandler(mc_LearnCompleted);
-            
-            try
-            {
-                try
-                {
-                   mc.Learn(learnFormat, learnCodeModifier, 0, new TimeSpan(0, 0, 10));
-                 //   mc.LearnAsync(learnFormat, learnCodeModifier, learnCompletedEventArgs);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("*** ERROR calling LearnAsync! ***");
-                    throw;
-                }
-
-
-                   //    while (learnCompletedEventArgs == null)
-                   //{
-
-                //string numero= ;
-                // string irCode = ;
-
-              //  int ret = numero.CompareTo(irCode);
-
-                //string s = Console.ReadLine();
-                //try
-                //{
-
-                //}
-                //catch (Exception ex)
-                //{
-
-                //    throw ex;
-                //}
-                //if (s.Length != 0 && s[0] == 'x')
-                //{
-
-                //    if (learnCompletedEventArgs == null)
-                //    {
-                //        Console.WriteLine("Calling LearnAsyncCancel...");
-                //        mc.LearnAsyncCancel(learnCompletedEventArgs);
-                //        Thread.Sleep(1000);
-                //        break;
-                //    }
-
-                //    else
-                //    {
-                //        Console.WriteLine("<Press x to abort Learn>");
-                //    }
-                // }
-
-                 //}
-
-                //if (string.IsNullOrEmpty(irCode))
-                //{
-                //    Console.WriteLine("String nula ou vazia");
-                //}
-
-                if (learnCompletedEventArgs != null && learnCompletedEventArgs.Cancelled == false && learnCompletedEventArgs.Error == null)
-                {
-                   
-                    
-                        irCode = learnCompletedEventArgs.Code;
-                        Console.WriteLine("...Done...IRCode = {0}", irCode);
-                        transmitFormat = learnFormat;
-                  
-                }
-
-            }
-            finally
-            {
-                mc.Learning -= new UsbUirt.Controller.LearningEventHandler(mc_Learning);
-                mc.LearnCompleted -= new UsbUirt.Controller.LearnCompletedEventHandler(mc_LearnCompleted);
-            }
-           
-        
-
-        }
-
-        public static void mc_Learning(object sender, LearningEventArgs e)
-        {
-            Console.WriteLine("Learning: {0}% freq={1} quality={2}", e.Progress, e.CarrierFrequency, e.SignalQuality);
-        }
-
-        private static void mc_LearnCompleted(object sender, LearnCompletedEventArgs e)
-        {
-            learnCompletedEventArgs = e;
-            Console.WriteLine("Learn complete. Press return to continue.");
-        }
-
-        private static void mc_Received(object sender, ReceivedEventArgs e)
-        {
-            Console.WriteLine("Aqui/11111");
-            Console.WriteLine("Received: {0}", e.IRCode);
-        }
-
-
+               
         public void Start(Mediator mediator)
         {
             this.mediator = mediator;
@@ -226,46 +119,265 @@ namespace Edith.Modules.FirstRemote
                     return;
                 case 1:
 
-                    TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
-                    ligar = irCode;
-                    Console.WriteLine("Aqui: " + ligar);
-                //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
-                //    BellPlayer.Play();
-                //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    using (ManualResetEvent waitEvent = new ManualResetEvent(false))
+                    {
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(ligar, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    }
                    break;
                 case 2:
 
+                   using (ManualResetEvent waitEvent = new ManualResetEvent(false))
+                    {
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(desligar, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    }
+                   break;
+
+                case 3:
+
                     using (ManualResetEvent waitEvent = new ManualResetEvent(false))
-            {
-                mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
-                
-                try
-                {
-                    mc.TransmitAsync(ligar, transmitFormat, 10, TimeSpan.Zero, waitEvent);
-                    Console.WriteLine("...Returned from call...");
-                    if (waitEvent.WaitOne(5000, false))
                     {
-                        Console.WriteLine("...IR Transmission Complete!");
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(aumvol, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
                     }
-                    else
+                   break;
+            
+                case 4:
+
+                    using (ManualResetEvent waitEvent = new ManualResetEvent(false))
                     {
-                        Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(dimivol, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("*** ERROR calling TransmitAsync! ***");
-                    throw;
-                }
-                finally
-                {
-                    mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
-                }
-            }
-                //    SoundPlayer StaffPlayer = new SoundPlayer(Settings.Default.PathStaffSound);
-                //    StaffPlayer.Play();
-                //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|CallStaff");
-                    break;
+                   break;
+
+                case 5:
+                    using (ManualResetEvent waitEvent = new ManualResetEvent(false))
+                    {
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(aumca, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    }
+                   break;
+
+                case 6:
+
+                    using (ManualResetEvent waitEvent = new ManualResetEvent(false))
+                    {
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(dimica, transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    }
+                   break;
+
+                case 7: 
+                     using (ManualResetEvent waitEvent = new ManualResetEvent(false))
+                    {
+                        mc.TransmitCompleted += new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+
+                        try
+                        {
+                            mc.TransmitAsync(mute , transmitFormat, 10, TimeSpan.Zero, waitEvent);
+                            Console.WriteLine("...Returned from call...");
+                            if (waitEvent.WaitOne(5000, false))
+                            {
+                                Console.WriteLine("...IR Transmission Complete!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("*** ERROR: Timeout error waiting for IR to finish!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("*** ERROR calling TransmitAsync! ***");
+                            throw;
+                        }
+
+
+
+                        finally
+                        {
+                            mc.TransmitCompleted -= new UsbUirt.Controller.TransmitCompletedEventHandler(mc_TransmitCompleted);
+                        }
+                        //    SoundPlayer BellPlayer = new SoundPlayer(Settings.Default.PathBellsound);
+                        //    BellPlayer.Play();
+                        //    Log.Data(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond.ToString() + "|Caller|BellPlay");
+                    }
+                   break;
+
+
+
+                   break;
+
+                  break;
             }
             isRunning = true;
         }
@@ -275,7 +387,7 @@ namespace Edith.Modules.FirstRemote
             if (!isRunning)
                 return;
             currentSelectedButtonIndex++;
-            if (currentSelectedButtonIndex == 7)
+            if (currentSelectedButtonIndex == 8)
                 currentSelectedButtonIndex = 0;
             switch (currentSelectedButtonIndex)
             {
@@ -320,6 +432,12 @@ namespace Edith.Modules.FirstRemote
                     B1.BorderBrush = B2.BorderBrush = B3.BorderBrush = B4.BorderBrush = B5.BorderBrush = B6.Background = B7.BorderBrush = unselectedBorder;
                     B7.Background = selectedBrush;
                     B7.BorderBrush = selectedBrush;
+                    break;
+                case 7:
+                    B1.Background = B2.Background = B3.Background = B4.Background = B5.Background = B6.Background = B7.Background = B8.Background =  unselectedBrush;
+                    B1.BorderBrush = B2.BorderBrush = B3.BorderBrush = B4.BorderBrush = B5.BorderBrush = B6.BorderBrush = B7.BorderBrush = B8.Background =  unselectedBorder;
+                    B8.Background = selectedBrush;
+                    B8.BorderBrush = selectedBrush;
                     break;
             }
 

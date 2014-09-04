@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.IEnumerable;
 
 using UsbUirt;
 using System.Threading;
@@ -23,6 +24,9 @@ namespace Edith.Modules.FirstRemote
     /// </summary>
     public partial class Config : UserControl
     {
+        public event EventHandler HasChanged;
+        private bool hasChanged = false;
+
         public string codigo;
         public string ligar;
         public string desligar;
@@ -47,12 +51,39 @@ namespace Edith.Modules.FirstRemote
             waitEvent.Set();
         }
 
+        public void Save()
+        {
+            if (hasChanged)
+            {
+                Edith.AbstractModules.TVBox.Settings.Default.Save();
+            }
+        }
+
+        public string Title
+        {
+            get { return Edith.AbstractModules.TVBox.Resources.ModuleName; }
+        }
+
+        public UIElement Element
+        {
+            get { return this; }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            hasChanged = true;
+            if (HasChanged != null)
+            {
+                HasChanged(this, new EventArgs());
+            }
+        }
+
         void LearnCompletedEvent(object sender, LearnCompletedEventArgs e)
         {
             System.Diagnostics.Debugger.Break();
         }
 
-        private static void TestLearn(Controller mc, CodeFormat learnFormat, LearnCodeModifier learnCodeModifier)
+        private static  void TestLearn(Controller mc, CodeFormat learnFormat, LearnCodeModifier learnCodeModifier)
         {
             learnCompletedEventArgs = null;
             //      Console.WriteLine("<Press x to abort Learn>");
@@ -93,14 +124,19 @@ namespace Edith.Modules.FirstRemote
 
         }
 
-        
+
+
         public static void mc_Learning(object sender, LearningEventArgs e)
         {
             Console.WriteLine("Learning: {0}% freq={1} quality={2}", e.Progress, e.CarrierFrequency, e.SignalQuality);
-          
+
+            // textBox8.Text = e.Progress.ToString();
+            //e.CarrierFrequency = textBox9.Text;
+            //e.SignalQuality = textBox10.Text;
         }
-        
-        private static void mc_LearnCompleted(object sender, LearnCompletedEventArgs e)
+
+
+          private static void mc_LearnCompleted(object sender, LearnCompletedEventArgs e)
         {
             learnCompletedEventArgs = e;
             Console.WriteLine("Learn complete. Press return to continue.");
@@ -111,21 +147,23 @@ namespace Edith.Modules.FirstRemote
         {
             Console.WriteLine("Aqui/11111");
             Console.WriteLine("Received: {0}", e.IRCode);
-            e = textbox11.Text;
-
+          //   if(e.IRCode != null)
+            //{
+            //e.iRCode = textBox11.Text;
+            //}
+            //
         }
 
         private void ButtonR0_Click(object sender, RoutedEventArgs e)
         {
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             aumvol = irCode;
-            string chamado = "";
+          //  string chamado = "";
             irCode = textBox1.Text;
             
            // textBox1.Text = ("Codigo IR:" + chamado);
-           
            //  Console.WriteLine("Aqui: " + ligar);
-
+            
         }
 
         private void ButtonR1_Click(object sender, RoutedEventArgs e)
@@ -133,9 +171,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             dimivol = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox2.Text = ("Codigo IR:" + chamado);
+            irCode = textBox2.Text;
             
         }
 
@@ -144,9 +180,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             aumca = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox3.Text = ("Codigo IR:" + chamado);
+            irCode = textBox3.Text;
 
         }
 
@@ -155,9 +189,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             dimica = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox4.Text = ("Codigo IR:" + chamado);
+            irCode = textBox4.Text;
 
         }
 
@@ -166,9 +198,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             ligar = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox5.Text = ("Codigo IR:" + chamado);
+            irCode = textBox5.Text;
 
         }
 
@@ -177,9 +207,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             desligar = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox6.Text = ("Codigo IR:" + chamado);
+            irCode = textBox6.Text;
 
         }
 
@@ -188,9 +216,7 @@ namespace Edith.Modules.FirstRemote
 
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             mute = irCode;
-            string chamado = "";
-            chamado = irCode;
-            textBox7.Text = ("Codigo IR:" + chamado);
+            irCode = textBox7.Text;
 
         }
 

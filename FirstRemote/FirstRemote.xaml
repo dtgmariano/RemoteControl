@@ -43,7 +43,11 @@
                         <Image Margin="30" Source="{DynamicResource button_speakerup}"/>
                     </StackPanel>
                 </Border>
-
+                <Border Margin="15" Name="B8" BorderThickness="5" BorderBrush="{DynamicResource  ResourceKey=IcsDarkButtonBorderOffFocus}" >
+                    <StackPanel>
+                        <Image  Margin="30" Source="{DynamicResource button_speakerup}"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Viewbox>
     </Grid>
