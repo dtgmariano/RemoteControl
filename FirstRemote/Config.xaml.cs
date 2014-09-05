@@ -55,13 +55,13 @@ namespace Edith.Modules.FirstRemote
         {
             if (hasChanged)
             {
-                Edith.AbstractModules.TVBox.Settings.Default.Save();
+                Edith.Modules.FirstRemote.Settings.Default.Save();
             }
         }
 
         public string Title
         {
-            get { return Edith.AbstractModules.TVBox.Resources.ModuleName; }
+            get { return Edith.Modules.FirstRemote.Resources.ModuleName; }
         }
 
         public UIElement Element
@@ -143,11 +143,15 @@ namespace Edith.Modules.FirstRemote
             
         }
 
+        
+
         private static void mc_Received(object sender, ReceivedEventArgs e)
         {
             Console.WriteLine("Aqui/11111");
             Console.WriteLine("Received: {0}", e.IRCode);
-          //   if(e.IRCode != null)
+            string chamar = (" " + e.IRCode);
+            
+            //   if(e.IRCode != null)
             //{
             //e.iRCode = textBox11.Text;
             //}
