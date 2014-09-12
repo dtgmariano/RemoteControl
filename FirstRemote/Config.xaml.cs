@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Collections.IEnumerable;
+//using System.Collections.IEnumerable;
 
 using UsbUirt;
 using System.Threading;
@@ -37,7 +37,7 @@ namespace Edith.Modules.FirstRemote
         public string mute;
         Controller mc = new Controller();
         public static string irCode = "0000 006B 0000 0022 00AB 00AE 0016 0041 0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0016 0016 0016 0016 0041 0016 0041 0016 0016 0016 0016 0016 0041 0016 0016 0016 0041 0016 0041 0016 0016 0016 0016 0016 0041 0016 0041 0016 0016 0016 0703";
-        
+
         public Config()
         {
             InitializeComponent();
@@ -69,21 +69,21 @@ namespace Edith.Modules.FirstRemote
             get { return this; }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            hasChanged = true;
-            if (HasChanged != null)
-            {
-                HasChanged(this, new EventArgs());
-            }
-        }
+        //private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    hasChanged = true;
+        //    if (HasChanged != null)
+        //    {
+        //        HasChanged(this, new EventArgs());
+        //    }
+        //}
 
         void LearnCompletedEvent(object sender, LearnCompletedEventArgs e)
         {
             System.Diagnostics.Debugger.Break();
         }
 
-        private static  void TestLearn(Controller mc, CodeFormat learnFormat, LearnCodeModifier learnCodeModifier)
+        private static void TestLearn(Controller mc, CodeFormat learnFormat, LearnCodeModifier learnCodeModifier)
         {
             learnCompletedEventArgs = null;
             //      Console.WriteLine("<Press x to abort Learn>");
@@ -136,21 +136,21 @@ namespace Edith.Modules.FirstRemote
         }
 
 
-          private static void mc_LearnCompleted(object sender, LearnCompletedEventArgs e)
+        private static void mc_LearnCompleted(object sender, LearnCompletedEventArgs e)
         {
             learnCompletedEventArgs = e;
             Console.WriteLine("Learn complete. Press return to continue.");
-            
+
         }
 
-        
+
 
         private static void mc_Received(object sender, ReceivedEventArgs e)
         {
             Console.WriteLine("Aqui/11111");
             Console.WriteLine("Received: {0}", e.IRCode);
             string chamar = (" " + e.IRCode);
-            
+
             //   if(e.IRCode != null)
             //{
             //e.iRCode = textBox11.Text;
@@ -162,12 +162,12 @@ namespace Edith.Modules.FirstRemote
         {
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             aumvol = irCode;
-          //  string chamado = "";
+            //  string chamado = "";
             irCode = textBox1.Text;
-            
-           // textBox1.Text = ("Codigo IR:" + chamado);
-           //  Console.WriteLine("Aqui: " + ligar);
-            
+
+            // textBox1.Text = ("Codigo IR:" + chamado);
+            //  Console.WriteLine("Aqui: " + ligar);
+
         }
 
         private void ButtonR1_Click(object sender, RoutedEventArgs e)
@@ -176,7 +176,7 @@ namespace Edith.Modules.FirstRemote
             TestLearn(mc, CodeFormat.Pronto, LearnCodeModifier.None);
             dimivol = irCode;
             irCode = textBox2.Text;
-            
+
         }
 
         private void ButtonR2_Click(object sender, RoutedEventArgs e)
@@ -224,7 +224,7 @@ namespace Edith.Modules.FirstRemote
 
         }
 
-      
+
 
     }
 }
